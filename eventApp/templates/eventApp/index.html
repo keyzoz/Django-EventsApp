@@ -1,0 +1,28 @@
+{% extends 'eventApp/base.html' %}
+
+{% block content %}
+<ul class="list-articles">
+	{% for e in events %}
+        <li><div class = 'article-panel'>
+            <p class='last'>Category: {{e.category}}</p>
+            </div>
+        {% if e.poster %}
+            <p><a href="{{e.get_absolute_url}}"><img class='img-article-left thumb' src="{{e.poster.url}}"></a></p>
+        {% endif %}
+
+        </li>
+			<li><h2>{{e.name}}</h2>
+	{% autoescape on %}
+	{{e.program|linebreaks|truncatewords:70}}
+	{% endautoescape %}
+			<li class="location">{{e.location}}</li>
+			<li>
+				<span>{{e.date}} |</span>
+				<span">{{e.time}}</span>
+			</li>
+			<li>Age Restriction: {{e.age_restriction}}</li>
+			<p class="link-read-post"><a href="{{ e.get_absolute_url }}">Подробнее</a></p>
+			</li>
+	{% endfor %}
+</ul>
+{% endblock %}

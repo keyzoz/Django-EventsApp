@@ -1,0 +1,24 @@
+{% extends 'eventApp/base.html' %}
+
+{% block content %}
+<h1>{{event.name}}</h1>
+
+{% if event.poster %}
+<p><img class="img-article-left" src="{{event.poster.url}}"></p>
+{% endif %}
+
+{{event.program|linebreaks}}
+
+<p><span class="bolded">Location: </span> : {{event.location}}</p>
+<p><span class="bolded">Time: </span> : {{event.time}}</p>
+<p><span class="bolded">Age Restriction: </span> : {{event.age_restriction}}</p>
+<form method="post">
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+    <button class="sumb-button" type="submit">Delete Event</button>
+    {% endif %}
+</form>
+
+
+
+{% endblock %}

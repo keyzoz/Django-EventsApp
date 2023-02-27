@@ -1,0 +1,74 @@
+{% load static %}
+{% load eventApp_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    
+	<link type="text/css" href="{% static 'eventApp/css/styles.css' %}" rel="stylesheet" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="shortcut icon" href="{% static 'eventApp/img/main.ico' %}" type="image/x-icon"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<table class="table-page" border=0 cellpadding="0" cellspacing="0">
+<tr><td valign=top>
+	
+{% block mainmenu %}
+		<div class="header">
+			<ul id="mainmenu" class="mainmenu">
+			<li class="logo"><a href="{% url 'home' %}"><div class="logo"></div></a></li>
+{% for m in menu %}
+			<li class="left"><a  href="{% url m.url_name %}">{{m.title}}</a></li>
+{% endfor %}
+
+			{% if request.user.is_authenticated %}	
+				<li class="last"><a href="{% url 'logout' %}">Logout</a></li>
+				<li class="last">{{user.username}}</a></li>
+			{% else %}
+				<li class="last"><a href="{% url 'login' %}">Login</a></li>
+				<li class="last"><a href="{% url 'register' %}">Register</a></li>
+			{% endif %}
+			</ul>
+			<div class="clear"></div>
+		</div>
+{% endblock mainmenu %}
+
+
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+<tr>
+<!-- Sidebar слева -->
+	<td valign="top" class="left-chapters">
+
+	<ul id="leftchapters">
+		{% if category %}
+            <li class ="selected">Categories</li>
+			{% for c in category %}
+				<li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
+			{% endfor %}
+			{% if user.is_authenticated %}
+			<li class="add_cat"><a href="{% url 'add_category' %}">Add a new category</a></li>
+			{% endif %}
+			{% else %}
+				<li class="add_cat"><a href="{% url 'add_category' %}">Add a new category</a></li>
+		{% endif%}
+
+	</ul>
+</td>
+<!-- Конец Sidebar'а -->
+<td valign="top" class="content">
+	{% block breadcrumbs %}
+	{% endblock %}
+
+	<div class="content-text">
+{% block content %}
+{% endblock %}
+	</div>
+
+</td></tr></table>
+</td></tr>
+</body>
+</html>
