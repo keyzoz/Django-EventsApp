@@ -49,13 +49,10 @@
 			{% for c in category %}
 				<li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
 			{% endfor %}
-			{% if user.is_authenticated %}
-			<li class="add_cat"><a href="{% url 'add_category' %}">Add a new category</a></li>
-			{% endif %}
-			{% else %}
-				<li class="add_cat"><a href="{% url 'add_category' %}">Add a new category</a></li>
 		{% endif%}
-
+		{% if request.user.is_authenticated %}	
+			<li class="add_cat"><a href="{% url 'add_category' %}">Add a new category</a></li>
+		{% endif %}
 	</ul>
 </td>
 <!-- Конец Sidebar'а -->

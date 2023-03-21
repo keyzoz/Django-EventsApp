@@ -1,0 +1,15 @@
+{% extends 'eventApp/base.html' %}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+<form method="POST" action="{% url 'send_mail' %}">
+    {% csrf_token %}
+    {% for f in form %}
+    <p><label class="form-label" for="{{f.id_for_label}}">{{f.label}}</label>&#32{{f}}</p>
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    <button class="sumb-button" type="submit">Отправить</button>
+</form>
+
+{% endblock %}

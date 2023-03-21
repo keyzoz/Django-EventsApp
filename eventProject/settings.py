@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'eventApp'
+    'eventApp',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
+        'PORT': '5444'
     }
 }
 
@@ -136,3 +138,20 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR,'eventProject_cache')
     }
 }
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+REDIS_DB = 0
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "testforcelery123@gmail.com"
+EMAIL_HOST_PASSWORD = "hauxmbdvslhwxhbo"

@@ -45,4 +45,7 @@ class UserRegistrationForm(UserCreationForm):
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Username', widget=forms.TextInput(attrs={'class':'form-input'}))
     password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class':'form-input'}))
-        
+
+class SendMailForm(forms.Form):
+    subject = forms.CharField(label='Subject', widget=forms.TextInput(attrs={'class':'form-input'}))
+    message = forms.CharField(label='Message', widget=forms.Textarea(attrs={'class':'form-input'}))
