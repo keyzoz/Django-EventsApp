@@ -1,6 +1,7 @@
 from .models import Category
 
-menu = [{'title': "Add a new event", "url_name":'add_event'}]
+menu = [{'title': "Add a new event", "url_name":'add_event'},
+        {'title': "Send a new mail", "url_name":'send_mail'} ]
 
 
 
@@ -9,7 +10,7 @@ class DataMixin:
         context = kwargs
         cats = Category.objects.all()   
         user_menu = menu.copy()
-        if not self.request.user.is_authenticated:
+        if not self.request.user.is_superuser:
                 user_menu.clear()
         context["menu"] = user_menu
         context["category"] = cats

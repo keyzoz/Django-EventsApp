@@ -50,7 +50,7 @@
 				<li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
 			{% endfor %}
 		{% endif%}
-		{% if request.user.is_authenticated %}	
+		{% if request.user.is_superuser %}	
 			<li class="add_cat"><a href="{% url 'add_category' %}">Add a new category</a></li>
 		{% endif %}
 	</ul>

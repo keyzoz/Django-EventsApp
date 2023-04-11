@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DeleteView, CreateView
 from django.views.generic.edit import FormView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from braces import views
 from eventProject import settings
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login,logout
@@ -35,7 +35,7 @@ class EventHome(DataMixin, ListView):
     def get_queryset(self):
         return Event.objects.filter(is_published=True).select_related('category')
     
-class AddEvent(LoginRequiredMixin,DataMixin,CreateView):
+class AddEvent(views.SuperuserRequiredMixin,DataMixin,CreateView):
     form_class = AddEventForm
     template_name = 'eventApp/add_event.html'
     success_url = reverse_lazy('home')
@@ -46,7 +46,7 @@ class AddEvent(LoginRequiredMixin,DataMixin,CreateView):
         c_def = self.get_user_context(title='Add a new event')
         return dict(list(context.items())+list(c_def.items())) 
     
-class AddCategory(LoginRequiredMixin,DataMixin,CreateView):
+class AddCategory(views.SuperuserRequiredMixin,DataMixin,CreateView):
     form_class = AddCategoryForm
     template_name = 'eventApp/add_category.html'
     success_url = reverse_lazy('home')
@@ -117,7 +117,7 @@ class EventCategory(DataMixin,ListView):
     def get_queryset(self) :
         return Event.objects.filter(category__slug=self.kwargs['cat_slug'],is_published=True).select_related('category')
 
-class SendMail(DataMixin, FormView):
+class SendMail(views.SuperuserRequiredMixin,DataMixin, FormView):
     template_name = 'eventApp/send_mail.html'
     form_class = SendMailForm
     success_url = reverse_lazy('home')
